@@ -1,3 +1,3 @@
-import BookingSystem from "./BookingSystem";
+import BookingSystem from './BookingSystem'
 
-export default BookingSystem;
+export default BookingSystem

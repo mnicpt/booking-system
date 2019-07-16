@@ -1,3 +1,6 @@
+# System Requirements #
+run `npm test` to view results of tests.  Tests defining the requirements are located in `src/Booking` and `src/Room`.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
