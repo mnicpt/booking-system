@@ -1,38 +1,94 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Booking from './Booking';
+import BookingSystem from './BookingSystem';
 import Room from '../Room'
+import Booking from './Booking';
+import { fail } from 'assert';
 
-const system = new Booking();
+const system = new BookingSystem();
 
 beforeEach(() => {
     system.addRoom(new Room({ level: 1, beds: 2}));
 });
 
-it ('should be able to add a room', () => {
-    
-    expect(system.availableRooms().length).toEqual(1);
+it ('should be able to create a valid booking', () => {
+    const room = new Room({
+        beds: 3,
+        level: 1
+    });
+    const booking = new Booking({
+        room,
+        pets: 1,
+        nights: 3
+    });
+    expect(booking.room).toEqual(room);
+    expect(booking.pets).toEqual(1);
+    expect(booking.nights).toEqual(3);
 });
 
-it ('should be able to remove a room', () => {
-    system.removeRoom(2);
+it ('should not create a booking with invalid room', () => {
     try {
-        system.getRoom(2)
+        const room = {};
+        const booking = new Booking({
+            room,
+            pets: 1,
+            nights: 3
+        });
+        fail();
     } catch (e) {
-        expect(true);
+        expect(e.message).toEqual('Invalid room definition.');
     }
 });
 
-it ('should be able to get a room', () => {
-    expect(system.getRoom(1).beds).toEqual(2);
+it ('should not create a booking with invalid pets', () => {
+    try {
+        const room = new Room({
+            beds: 3,
+            level: 1
+        });
+        const booking = new Booking({
+            room,
+            pets: 3,
+            nights: 3
+        });
+        fail();
+    } catch (e) {
+        expect(e.message).toEqual('Cannot have more than 2 pets in a room.');
+    }
 });
 
-it ('should be able to book a room', () => {
-    system.bookRoom(1);
-    expect(system.getRoom(1).booked).toEqual(true);
+it ('should not create a booking with invalid nights', () => {
+    try {
+        const room = new Room({
+            beds: 3,
+            level: 1
+        });
+        const booking = new Booking({
+            room,
+            pets: 2,
+            nights: 0
+        });
+        fail();
+    } catch (e) {
+        expect(e.message).toEqual('Invalid number of nights.');
+    }
 });
 
-it ('should be able to release a room', () => {
-    system.releaseRoom(1);
-    expect(system.getRoom(1).booked).toEqual(false);
+it ('should not create a booking if room is already booked', () => {
+    try {
+        const room = new Room({
+            beds: 3,
+            level: 1
+        });
+        room.booked = true;
+
+        const booking = new Booking({
+            room,
+            pets: 2,
+            nights: 3
+        });
+        fail();
+    } catch (e) {
+        expect(e.message).toEqual('Room is already booked.');
+    }
 });

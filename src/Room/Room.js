@@ -3,16 +3,14 @@ import React from 'react';
 /**
  * Motel Room
  * 
- * Sample Room:
- * {
- *  numBeds: 2,
- *  level: 1
- *  accessible: true,
- *  petsAllowed: true,
- *  cost, 50
- * }
  * 
  * @param  {...any} args
+ * 
+ * Sample Room:
+ * {
+ *  beds: 2,
+ *  level: 1
+ * }
  */
 export default function Room (...args) {
     const { beds, level } = args[0];
