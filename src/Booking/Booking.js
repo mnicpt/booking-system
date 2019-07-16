@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Booking (...args) {
   const { room, pets, nights, accessible } = args[0]
 
