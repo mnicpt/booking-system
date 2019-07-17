@@ -1,6 +1,9 @@
 /**
  * Booking.js
  *
+ * Specifies booking dates, options (number of pets and accessible room)
+ * and the available room.
+ *
  * @param  {...any} args { startDate, endDate, room, pets, accessible }
  * @return {object} { room, pets, startDate, endDate, accessible }
  */

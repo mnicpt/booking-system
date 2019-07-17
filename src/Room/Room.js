@@ -4,22 +4,23 @@
  * @param  {...any} args {beds, level}
  * @return {object}
  * {
+ *  id,
  *  beds,
  *  level,
  *  accessible,
  *  petsAllowed,
- *  cost,
- *  booked
+ *  cost
  * }
  */
 export default function Room(...args) {
-  const { beds, level } = args[0];
+  const { id, beds, level } = args[0];
   const roomCosts = {
     1: 50,
     2: 75,
     3: 90,
   };
 
+  if (id < 0) throw new Error('Invalid room number.');
   if (level < 1 || level > 2) {
     throw new Error('Allowed number of levels are 1, or 2.');
   }
@@ -31,7 +32,12 @@ export default function Room(...args) {
   const petsAllowed = level === 1;
   const cost = roomCosts[beds];
 
-  this.booked = false;
-
-  return { beds, level, accessible, petsAllowed, cost, booked: this.booked };
+  return {
+    id,
+    beds,
+    level,
+    accessible,
+    petsAllowed,
+    cost,
+  };
 }

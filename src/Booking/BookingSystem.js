@@ -8,19 +8,20 @@
  *  getRoom,
  *  bookRoom,
  *  releaseRoom,
- *  availableRooms,
  *  calculateTotalCost
  * }
  */
 export default function BookingSystem() {
   const rooms = {};
+  const bookings = [];
   let roomCount = 0;
 
   const addRoom = (room) => {
     if (!room.level || !room.beds) {
       throw new Error('Parameter must be of type Room.');
     }
-    rooms[++roomCount] = room;
+    room.id = ++roomCount;
+    rooms[roomCount] = room;
   };
 
   const removeRoom = (roomNumber) => {
@@ -33,19 +34,32 @@ export default function BookingSystem() {
     return rooms[roomNumber];
   };
 
-  const bookRoom = (roomNumber) => {
-    if (!rooms[roomNumber]) throw new Error('This room is not available.');
-    rooms[roomNumber].booked = true;
+  const bookRoom = (newBooking) => {
+    const bookedRoomNumbers = [];
+    bookings.forEach((booking) => {
+      if (newBooking.startDate < booking.endDate ||
+        newBooking.endDate > booking.startDate) {
+        bookedRoomNumbers.push(booking.room.id);
+      }
+    });
+
+    const reservableRoomNumbers = Object.keys(rooms).filter((roomNumber) => {
+      return !bookedRoomNumbers.includes(roomNumber);
+    });
+
+    if (reservableRoomNumbers.length === 0) {
+      throw new Error('This room is not available on these dates.');
+    }
+
+    const room = rooms[reservableRoomNumbers[0]];
+    bookings.push(room);
+
+    return room;
   };
 
   const releaseRoom = (roomNumber) => {
     if (!rooms[roomNumber]) throw new Error('This room is not available.');
     rooms[roomNumber].booked = false;
-  };
-
-  const availableRooms = () => {
-    return Object.keys(rooms).filter((roomNumber) =>
-      getRoom(roomNumber).booked === false);
   };
 
   const calculateTotalCost = (booking) => {
@@ -64,7 +78,6 @@ export default function BookingSystem() {
     getRoom,
     bookRoom,
     releaseRoom,
-    availableRooms,
     calculateTotalCost,
   };
 }
