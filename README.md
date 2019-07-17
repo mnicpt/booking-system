@@ -19,7 +19,7 @@ Object to store booking properties.
 
 ### Definition
 | Name | Type | Description |
-|----------|------------|--------|-------------|
+|----------|------------|--------|
 | room    | Room     | Room to be booked   |
 | pets | Integer | Number of pets |
 | startDate    | Int64 | Start date |
@@ -32,7 +32,7 @@ Object to store room properties.
 
 ### Definition
 | Name | Type | Description |
-|----------|------------|--------|-------------|
+|----------|------------|--------|
 | id    | Integer     | Room number   |
 | beds | Integer | Number of beds. 1, 2 or 3. |
 | level    | Integer | Start date in milliseconds |
