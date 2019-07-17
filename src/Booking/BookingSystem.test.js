@@ -1,5 +1,3 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
 import BookingSystem from './BookingSystem'
 import Room from '../Room'
 import Booking from './Booking'

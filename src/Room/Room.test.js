@@ -1,5 +1,3 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
 import Room from './Room'
 import { fail } from 'assert'
 
