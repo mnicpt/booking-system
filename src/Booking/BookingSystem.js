@@ -20,6 +20,11 @@ export default function BookingSystem() {
     if (!room.level || !room.beds) {
       throw new Error('Parameter must be of type Room.');
     }
+
+    if (rooms[roomCount + 1]) {
+      throw new Error(`Room number ${roomCount + 1} already exists.`);
+    }
+
     room.id = ++roomCount;
     rooms[roomCount] = room;
   };
@@ -30,11 +35,13 @@ export default function BookingSystem() {
   };
 
   const getRoom = (roomNumber) => {
-    if (!rooms[roomNumber]) throw new Error('This room is not available.');
+    if (!rooms[roomNumber]) throw new Error('This room does not exist.');
     return rooms[roomNumber];
   };
 
   const bookRoom = (newBooking) => {
+    const proposedBooking = Object.assign({}, newBooking);
+
     const bookedRoomNumbers = [];
     bookings.forEach((booking) => {
       if (newBooking.startDate < booking.endDate ||
@@ -51,15 +58,44 @@ export default function BookingSystem() {
       throw new Error('This room is not available on these dates.');
     }
 
-    const room = rooms[reservableRoomNumbers[0]];
-    bookings.push(room);
+    let availableRooms = []; // room numbers
+    if (newBooking.pets > 0 || newBooking.accessible) {
+      availableRooms = reservableRoomNumbers.filter((roomNumber) => {
+        const room = rooms[roomNumber];
+        return room.level === 1 && room.beds === newBooking.room.beds;
+      });
+    } else {
+      availableRooms = reservableRoomNumbers.filter((roomNumber) => {
+        const room = rooms[roomNumber];
+        return room.beds === newBooking.room.beds &&
+          room.level === newBooking.room.level;
+      });
+    }
 
-    return room;
+    if (availableRooms.length === 0) {
+      throw new Error('This room is not available on these dates.');
+    }
+
+    proposedBooking.room = rooms[availableRooms[0]];
+    bookings.push(proposedBooking);
+
+    return proposedBooking;
   };
 
   const releaseRoom = (roomNumber) => {
     if (!rooms[roomNumber]) throw new Error('This room is not available.');
-    rooms[roomNumber].booked = false;
+
+    let releasedRoom = null;
+    let index = null;
+    bookings.forEach((booking, i) => {
+      if (booking.room.id === roomNumber) {
+        index = i;
+        releasedRoom = booking.room;
+      }
+    });
+
+    bookings.splice(index, 1);
+    return releasedRoom;
   };
 
   const calculateTotalCost = (booking) => {

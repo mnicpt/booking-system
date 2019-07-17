@@ -28,7 +28,7 @@ it('should be able to remove a room', () => {
   try {
     system.getRoom(2);
   } catch (e) {
-    expect(e.message).toEqual('This room is not available.');
+    expect(e.message).toEqual('This room does not exist.');
   }
 });
 
@@ -37,6 +37,22 @@ it('should be able to get a room', () => {
 });
 
 it('should be able to book a room', () => {
+  const booking = system.bookRoom(new Booking({
+    room: system.getRoom(1),
+    startDate: 1563320420000,
+    endDate: 1563579620000,
+    pets: 2,
+    accessible: false,
+  }));
+
+  const room = booking.room;
+
+  expect(room.id).toEqual(1);
+  expect(room.level).toEqual(1);
+  expect(room.beds).toEqual(2);
+});
+
+it('should be able to release a room', () => {
   const room = system.bookRoom(new Booking({
     room: system.getRoom(1),
     startDate: 1563320420000,
@@ -45,14 +61,8 @@ it('should be able to book a room', () => {
     accessible: false,
   }));
 
-  expect(room.id).toEqual(1);
-  expect(room.level).toEqual(1);
-  expect(room.beds).toEqual(2);
-});
-
-it('should be able to release a room', () => {
-  system.releaseRoom(1);
-  expect(system.getRoom(1).booked).toEqual(false);
+  const releasedRoom = system.releaseRoom(1);
+  expect(releasedRoom.id).toEqual(1);
 });
 
 it('should be able to calculate total cost', () => {
