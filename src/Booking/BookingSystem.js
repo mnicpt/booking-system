@@ -17,6 +17,8 @@ export default function BookingSystem() {
   let roomCount = 0;
 
   const addRoom = (room) => {
+    const roomToAdd = Object.assign({}, room);
+
     if (!room.level || !room.beds) {
       throw new Error('Parameter must be of type Room.');
     }
@@ -25,8 +27,8 @@ export default function BookingSystem() {
       throw new Error(`Room number ${roomCount + 1} already exists.`);
     }
 
-    room.id = ++roomCount;
-    rooms[roomCount] = room;
+    roomToAdd.id = ++roomCount;
+    rooms[roomCount] = roomToAdd;
   };
 
   const removeRoom = (roomNumber) => {
