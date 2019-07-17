@@ -51,10 +51,10 @@ export default function BookingSystem() {
   const calculateTotalCost = (booking) => {
     if (!booking.room || !booking.startDate ||
       !booking.endDate || !booking.pets ||
-      booking.accessible !== undefined) {
+      booking.accessible === undefined) {
       throw new Error('Parameter must be a Booking.');
     }
-    const nights = (booking.endDate - booking.startDate) * 1000 * 60 * 60 * 24;
+    const nights = (booking.endDate - booking.startDate) / 1000 / 60 / 60 / 24;
     return booking.room.cost * nights + (booking.pets > 0 ? 20 : 0);
   };
 
