@@ -49,8 +49,10 @@ it('should be able to release a room', () => {
 it('should be able to calculate total cost', () => {
   const total = system.calculateTotalCost(new Booking({
     room: system.getRoom(1),
-    nights: 3,
-    pets: 2
+    startDate: 1563320420000,
+    endDate: 1563579620000,
+    pets: 2,
+    accessible: false
   }))
   expect(total).toEqual(245)
 })
@@ -59,8 +61,10 @@ it('should throw error for invalid night booking', () => {
   try {
     system.calculateTotalCost(new Booking({
       room: system.getRoom(1),
-      nights: 0,
-      pets: 2
+      startDate: 1563320420000,
+      endDate: 1563320420000,
+      pets: 2,
+      accessible: false
     }))
     fail()
   } catch (e) {
@@ -72,7 +76,8 @@ it('should throw error for invalid pet booking', () => {
   try {
     system.calculateTotalCost(new Booking({
       room: system.getRoom(1),
-      nights: 3,
+      startDate: 1563320420000,
+      endDate: 1563579620000,
       pets: 3
     }))
     fail()

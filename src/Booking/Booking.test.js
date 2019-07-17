@@ -19,11 +19,13 @@ it('should be able to create a valid booking', () => {
   const booking = new Booking({
     room,
     pets: 1,
-    nights: 3
-  })
-  expect(booking.room).toEqual(room)
-  expect(booking.pets).toEqual(1)
-  expect(booking.nights).toEqual(3)
+    startDate: 1563320420000,
+    endDate: 1563579620000
+  });
+  expect(booking.room).toEqual(room);
+  expect(booking.pets).toEqual(1);
+  expect(booking.startDate).toEqual(1563320420000);
+  expect(booking.endDate).toEqual(1563579620000);
 })
 
 it('should not create a booking with invalid room', () => {
@@ -32,8 +34,9 @@ it('should not create a booking with invalid room', () => {
     const booking = new Booking({
       room,
       pets: 1,
-      nights: 3
-    })
+      startDate: 1563320420000,
+      endDate: 1563579620000
+    });
     fail()
   } catch (e) {
     expect(e.message).toEqual('Invalid room definition.')
@@ -49,7 +52,8 @@ it('should not create a booking with invalid pets', () => {
     const booking = new Booking({
       room,
       pets: 3,
-      nights: 3
+      startDate: 1563320420000,
+      endDate: 1563579620000
     })
     fail()
   } catch (e) {
@@ -66,8 +70,9 @@ it('should not create a booking with invalid nights', () => {
     const booking = new Booking({
       room,
       pets: 2,
-      nights: 0
-    })
+      startDate: 1563320420000,
+      endDate: 1563320420000
+    });
     fail()
   } catch (e) {
     expect(e.message).toEqual('Invalid number of nights.')
@@ -85,8 +90,9 @@ it('should not create a booking if room is already booked', () => {
     const booking = new Booking({
       room,
       pets: 2,
-      nights: 3
-    })
+      startDate: 1563320420000,
+      endDate: 1563579620000
+    });
     fail()
   } catch (e) {
     expect(e.message).toEqual('Room is already booked.')

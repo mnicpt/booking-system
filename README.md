@@ -1,6 +1,29 @@
 # System Requirements #
 run `npm test` to view results of tests.  Tests defining the requirements are located in `src/Booking` and `src/Room`.
 
+### Objects
+#### BookingSystem
+Provides overall booking system functionality to create a booking at the motel.
+
+##### API
+| Function | Parameters | Return | Description |
+|----------|------------|--------|-------------|
+| addRoom    | Room     | Void   | Adds a room to the motel |
+| removeRoom | Room Number | Void | Removes a room from the motel |
+| bookRoom    | Room Number | Void | Books a room |
+| releaseRoom ||||
+| availableRooms ||||
+| calculateTotalCost ||||
+addRoom
+removeRoom
+getRoom
+bookRoom
+releaseRoom
+availableRooms
+calculateTotalCost
+#### Booking
+#### Room
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
