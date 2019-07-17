@@ -1,28 +1,45 @@
 # System Requirements #
 run `npm test` to view results of tests.  Tests defining the requirements are located in `src/Booking` and `src/Room`.
 
-### Objects
-#### BookingSystem
+## BookingSystem
 Provides overall booking system functionality to create a booking at the motel.
 
-##### API
+### API
 | Function | Parameters | Return | Description |
 |----------|------------|--------|-------------|
-| addRoom    | Room     | Void   | Adds a room to the motel |
-| removeRoom | Room Number | Void | Removes a room from the motel |
-| bookRoom    | Room Number | Void | Books a room |
-| releaseRoom ||||
-| availableRooms ||||
-| calculateTotalCost ||||
-addRoom
-removeRoom
-getRoom
-bookRoom
-releaseRoom
-availableRooms
-calculateTotalCost
-#### Booking
-#### Room
+| addRoom    | room     | Void   | Adds a room to the motel |
+| removeRoom | roomNumber | Void | Removes a room from the motel |
+| getRoom    | roomNumber | Room | Retrieves room for given room number |
+| bookRoom   | booking | Room | Books a room if available given proposed booking  |
+| releaseRoom| roomNumber | Room | Releases room from being booked |
+| calculateTotalCost | booking | Float | Calculates total cost from booking options |
+
+## Booking
+Object to store booking properties.
+
+### Definition
+| Name | Type | Description |
+|----------|------------|--------|-------------|
+| room    | Room     | Room to be booked   |
+| pets | Integer | Number of pets |
+| startDate    | Int64 | Start date |
+| endDate   | Int64 | End date |
+| accessible| boolean | Requesting accessible room |
+
+
+## Room
+Object to store room properties.
+
+### Definition
+| Name | Type | Description |
+|----------|------------|--------|-------------|
+| id    | Integer     | Room number   |
+| beds | Integer | Number of beds. 1, 2 or 3. |
+| level    | Integer | Start date in milliseconds |
+| accessible   | boolean | End date in milliseconds |
+| petsAllowed| boolean | If level 1, pets are allowed |
+| cost| Float | Cost of room based on number of beds. |
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
